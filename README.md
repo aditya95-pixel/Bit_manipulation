@@ -378,3 +378,70 @@ public:
     }
 };
 ```
+
+## Q12 Number of Valid Words for Each Puzzle
+
+With respect to a given puzzle string, a word is valid if both the following conditions are satisfied:
+word contains the first letter of puzzle.
+For each letter in word, that letter is in puzzle.
+For example, if the puzzle is "abcdefg", then valid words are "faced", "cabbage", and "baggage", while
+invalid words are "beefed" (does not include 'a') and "based" (includes 's' which is not in the puzzle).
+Return an array answer, where answer[i] is the number of words in the given word list words that is valid with respect to the puzzle puzzles[i].
+
+```cpp
+class Solution {
+public:
+    vector<int> findNumOfValidWords(vector<string>& words, vector<string>& puzzles) {
+        unordered_map<int,int>wordmasks;
+        for(auto &word:words){
+            set<char>s(word.begin(),word.end());
+            int mask=0;
+            for(int i=0;i<26;i++)
+            {
+                if(s.count((char)(i+'a')))
+                mask|=(1<<i);
+            }
+            wordmasks[mask]++;
+        }
+        vector<int>res;
+        for(int t=0;t<puzzles.size();t++){
+            string &puzzle=puzzles[t];
+            set<char>s(puzzle.begin(),puzzle.end());
+            int puzzlemask=0;
+            for(int i=0;i<26;i++)
+            {
+                if(s.count((char)(i+'a')))
+                puzzlemask|=(1<<i);
+            }
+            int cnt=0;
+            for(auto &item:wordmasks){
+                int wordmask=item.first;
+                int freq=item.second;
+                bool chk=1;
+                int c=(int)(puzzle[0]-'a');
+                if(!((wordmask>>c)&1))
+                continue;
+                for(int i=0;i<26;i++){
+                    if(((wordmask>>i)&1) && !((puzzlemask>>i)&1))
+                    {
+                        chk=0;
+                        break;
+                    }
+                }
+                if(chk)
+                cnt+=freq;
+            }
+            res.push_back(cnt);
+        }
+        return res;
+    }
+};
+```
+
+## Submask Loop
+
+```txt
+for (int sub = mask; sub; sub = (sub - 1) & mask) {
+    // all non-empty submasks
+}
+```
