@@ -255,3 +255,41 @@ public:
     }
 };
 ```
+
+## What is a bitmask?
+
+An integer where each bit represents presence/absence.
+
+```txt
+mask = 10101₂
+```
+Means:
+
+element 0 → present
+
+element 2 → present
+
+element 4 → present
+
+
+## Subset Enumeration Using Bitmask
+
+For a set of size n:
+
+```txt
+for (int mask = 0; mask < (1 << n); mask++) {
+    // mask represents a subset
+}
+```
+
+Total subsets = 2^n
+
+Works when n ≤ 20
+
+## Checking elements inside a mask
+
+```txt
+if ((mask >> i) & 1) {
+    // ith element is present
+}
+```
