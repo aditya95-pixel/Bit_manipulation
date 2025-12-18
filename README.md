@@ -553,3 +553,34 @@ public:
     }
 };
 ```
+
+## When to use Bitmask DP
+
+n ≤ 20
+
+Each element can be used / not used
+
+Order doesn’t matter
+
+State can be represented as a subset
+
+```txt
+Pattern 1: Add one element
+dp[mask | (1 << i)] = min(dp[mask | (1 << i)], dp[mask] + cost[i]);
+
+Used in:
+Assignment DP
+TSP
+Scheduling
+
+Pattern 2: Iterate submasks
+for (int sub = mask; sub; sub = (sub - 1) & mask) {
+    // dp[mask] = combine(dp[sub], dp[mask ^ sub])
+}
+
+
+Used in:
+Partition DP
+Team selection
+Coverage problems
+```
