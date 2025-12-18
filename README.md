@@ -445,3 +445,22 @@ for (int sub = mask; sub; sub = (sub - 1) & mask) {
     // all non-empty submasks
 }
 ```
+
+## Q13 Bitwise AND of Numbers Range
+
+Given two integers left and right that represent the range [left, right], return the bitwise AND of all numbers in this range, inclusive.
+
+```cpp
+class Solution {
+public:
+    int rangeBitwiseAnd(int left, int right) {
+        int shifts=0;
+        while(left<right){
+            left>>=1;
+            right>>=1;
+            shifts++;
+        }
+        return (left<<shifts);
+    }
+};
+```
